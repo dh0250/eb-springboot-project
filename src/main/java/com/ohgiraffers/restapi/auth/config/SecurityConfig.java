@@ -4,6 +4,7 @@ import com.ohgiraffers.restapi.auth.jwt.JwtAuthenticationFilter;
 import com.ohgiraffers.restapi.auth.jwt.JwtTokenProvider;
 import com.ohgiraffers.restapi.auth.jwt.RestAccessDeniedHandler;
 import com.ohgiraffers.restapi.auth.jwt.RestAuthenticationEntryPoint;
+import jakarta.servlet.DispatcherType;
 import jakarta.servlet.Filter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -58,7 +59,9 @@ public class SecurityConfig {
                         exception.authenticationEntryPoint(restAuthenticationEntryPoint)
                                 .accessDeniedHandler(restAccessDeniedHandler))
                 .authorizeHttpRequests(auth -> auth
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/error").permitAll()
                         .requestMatchers(HttpMethod.GET, "/actuator/health", "/actuator/health/**").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/lib/**", "/productimgs/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/signup", "/auth/login", "/auth/refresh", "/auth/logout").permitAll()
@@ -89,7 +92,7 @@ public class SecurityConfig {
         config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedOrigin("http://localhost:3001");
         config.addAllowedOrigin("http://localhost:5173");
-        config.addAllowedOrigin("https://bucket-dahyun.s3.ap-northeast-2.amazonaws.com");
+        config.addAllowedOrigin("http://bucket-dahyun.s3.ap-northeast-2.amazonaws.com");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         config.setAllowCredentials(true);
