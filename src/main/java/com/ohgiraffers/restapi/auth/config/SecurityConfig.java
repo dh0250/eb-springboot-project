@@ -89,6 +89,7 @@ public class SecurityConfig {
         config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedOrigin("http://localhost:3001");
         config.addAllowedOrigin("http://localhost:5173");
+        config.addAllowedOrigin("https://bucket-dahyun.s3.ap-northeast-2.amazonaws.com");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         config.setAllowCredentials(true);
